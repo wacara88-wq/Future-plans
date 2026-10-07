@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7fbff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="My Savings">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>My Savings — Money Journal</title>
+<style>
+:root{--bg:#f6fbff;--card:rgba(255,255,255,.88);--ink:#294052;--muted:#748694;--line:rgba(82,113,132,.14);--blue:#78bfe9;--green:#70bd9a;--gold:#e5bd70;--pink:#e3a2b9;--shadow:0 18px 50px rgba(61,103,133,.12);--r:24px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:var(--ink);background:linear-gradient(#eef9ff,#fbfdff 45%,#f7fbfd);min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}
+.hero{min-height:430px;background-image:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.84) 82%,#f6fbff 100%),url("home.png");background-size:cover;background-position:center top;position:relative}.hero:after{content:"";position:absolute;inset:auto 0 0;height:130px;background:linear-gradient(transparent,#f6fbff)}
+.nav,.hero-copy,.container{max-width:1180px;margin:auto}.nav{position:relative;z-index:2;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:850;letter-spacing:.1em;color:#527086}.brand small{display:block;font-weight:500;letter-spacing:.02em;color:#8295a2;margin-top:3px}.nav-actions{display:flex;gap:8px}.pill{border:1px solid rgba(255,255,255,.8);background:rgba(255,255,255,.65);backdrop-filter:blur(12px);padding:10px 14px;border-radius:999px;color:#496578}
+.hero-copy{position:relative;z-index:2;margin-top:75px;padding:0 24px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:12px;color:#6b9db7;font-weight:750}.hero h1{font-size:clamp(40px,6vw,70px);line-height:.98;margin:12px 0;color:#30485a;max-width:700px}.hero p{max-width:580px;color:#657c8c;font-size:17px;line-height:1.7}
+.container{margin-top:-12px;padding:0 20px 70px;position:relative;z-index:3}.tabs{display:flex;gap:7px;overflow:auto;padding:7px;background:rgba(255,255,255,.76);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:18px;box-shadow:var(--shadow)}.tab{border:0;background:transparent;padding:11px 17px;border-radius:12px;color:#718593;white-space:nowrap}.tab.active{background:#eaf6ff;color:#3e7697;font-weight:750}
+.section{display:none;margin-top:22px}.section.active{display:block}.grid{display:grid;gap:16px}.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.two{grid-template-columns:1.35fr .65fr}.three{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:21px}.money-card{position:relative;overflow:hidden}.money-card:before{content:"";position:absolute;width:135px;height:135px;border-radius:50%;right:-58px;top:-58px;background:var(--accent,#dff2ff);opacity:.62}.icon{font-size:24px}.label{font-size:13px;color:var(--muted)}.amount{font-size:32px;font-weight:850;letter-spacing:-.035em;margin:8px 0 4px}.currency{font-size:14px;color:#7e919d;font-weight:600}.change{font-size:13px;margin-top:8px}.up{color:#4d9b7b}.down{color:#b96f83}.section-title{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:5px 0 14px}.section-title h2{font-size:21px;margin:0}.muted,.small{color:var(--muted)}.small{font-size:12px}
+.chart-wrap{height:330px}.chart{width:100%;height:100%}.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:7px;font-size:12px;color:#647987}.legend span{display:flex;align-items:center;gap:6px}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;color:#728694;margin-bottom:7px}.field input,.field select{width:100%;padding:13px 14px;border:1px solid var(--line);background:#fff;border-radius:13px;outline:none;color:var(--ink)}.field input:focus,.field select:focus{border-color:#9ccde9;box-shadow:0 0 0 3px #eaf6ff}.full{grid-column:1/-1}.actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}.primary{border:0;background:linear-gradient(135deg,#78bfe9,#8ccfb3);color:#fff;padding:13px 18px;border-radius:13px;font-weight:800;box-shadow:0 10px 24px rgba(96,175,194,.2)}.secondary{border:1px solid var(--line);background:#fff;color:#587082;padding:10px 14px;border-radius:12px}
+.etf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.etf-card{border:1px solid var(--line);border-radius:17px;padding:15px;background:#fff}.etf-card .ticker{font-weight:850;font-size:17px}.etf-card .etf-name{font-size:11px;color:var(--muted);margin-top:2px}.etf-card .etf-value{font-size:22px;font-weight:800;margin-top:12px}.etf-card .etf-meta{font-size:11px;color:var(--muted);margin-top:3px}
+.history{display:flex;flex-direction:column;gap:0}.row{display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:8px}.entry-value{font-weight:750}.empty{text-align:center;padding:30px;color:var(--muted)}.notice{background:#f8fbff;border:1px dashed #bfdceb;border-radius:16px;padding:13px 15px;color:#647e8f;font-size:13px;line-height:1.6}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi{padding:13px 14px;border-radius:16px;background:#f8fbfd;border:1px solid var(--line)}.kpi b{display:block;font-size:20px;margin-top:3px}.footer{text-align:center;color:#8a9aa5;font-size:12px;padding:30px}
+@media(max-width:850px){.cards,.three,.two{grid-template-columns:1fr}.etf-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.hero{min-height:390px}.hero-copy{margin-top:48px;padding:0 18px}.hero p{font-size:15px}.nav{padding:15px 16px}.container{padding:0 13px 50px}.cards{gap:11px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.amount{font-size:28px}.chart-wrap{height:285px}.row{grid-template-columns:72px 1fr auto}.etf-grid{grid-template-columns:1fr 1fr}.actions{flex-wrap:wrap}.actions>*{min-height:44px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<nav class="nav"><div class="brand">MY SAVINGS<small>money journal</small></div><div class="nav-actions"><button class="pill" id="installBtn" hidden>Install</button><button class="pill" id="exportTop">Export</button></div></nav>
+<div class="hero-copy"><div class="eyebrow">A gentle place for your future</div><h1>Save quietly.<br>Grow beautifully.</h1><p>ติดตามเงิน 3 ก้อนแยกสกุลเงินอย่างชัดเจน พร้อมเชื่อม Investment กับ ETF แต่ละตัว เพื่อให้เห็นว่าเงินของคุณอยู่ตรงไหนและเปลี่ยนแปลงอย่างไร</p></div>
+</header>
+<main class="container">
+<div class="tabs">
+<button class="tab active" data-tab="dashboard">Overview</button><button class="tab" data-tab="record">บันทึกเงิน</button><button class="tab" data-tab="investment">Investment</button><button class="tab" data-tab="happiness">☀️ Happiness Fund</button><button class="tab" data-tab="history">ประวัติ</button><button class="tab" data-tab="settings">ตั้งค่า</button>
+</div>
+
+<section class="section active" id="dashboard">
+<div class="grid cards">
+<article class="card money-card" style="--accent:#e8f5ff"><div class="icon">🛟</div><div class="label">Emergency Fund</div><div class="amount" id="eurTotal">0.00 <span class="currency">EUR</span></div><div class="change" id="eurChange">ยังไม่มีข้อมูล</div></article>
+<article class="card money-card" style="--accent:#e7f7f0"><div class="icon">📈</div><div class="label">ETF Investment</div><div class="amount" id="usdTotal">0.00 <span class="currency">USD</span></div><div class="change" id="usdChange">ยังไม่มีข้อมูล</div></article>
+<article class="card money-card" style="--accent:#fff1df"><div class="icon">☀️</div><div class="label">Happiness Fund</div><div class="amount" id="thbTotal">0.00 <span class="currency">THB</span></div><div class="change" id="thbChange">ยังไม่มีข้อมูล</div></article>
+</div>
+
+<div class="grid two" style="margin-top:16px">
+<article class="card"><div class="section-title"><h2>Money Growth</h2><span class="small">3 ยอดแยกสกุลเงิน · เชื่อมตามวันที่</span></div><div class="chart-wrap"><canvas id="chart" class="chart"></canvas></div><div class="legend"><span><i style="background:#76bde8"></i>Emergency · EUR</span><span><i style="background:#70bd9a"></i>Investment · USD</span><span><i style="background:#e5bd70"></i>Happiness · THB</span></div></article>
+<article class="card"><div class="section-title"><h2>Today at a glance</h2></div><div class="kpis"><div class="kpi"><span class="small">ETF ที่ถือ</span><b id="etfCount">0</b></div><div class="kpi"><span class="small">Investment ETFs</span><b id="etfTotalSmall">0.00 USD</b></div></div><div class="section-title" style="margin-top:22px"><h2>This month</h2></div><div id="monthSummary"></div></article>
+</div>
+
+<div class="card" style="margin-top:16px"><div class="section-title"><h2>ETF Allocation</h2><button class="secondary" data-tab-go="investment">ดูรายละเอียด</button></div><div id="dashboardEtfs" class="etf-grid"></div></div>
+</section>
+
+<section class="section" id="record">
+<div class="card"><div class="section-title"><h2>บันทึกการเก็บเงิน</h2><span class="small">เพิ่มหรือถอนเงิน</span></div>
+<form id="entryForm"><div class="form-grid">
+<div class="field"><label>วันที่</label><input id="date" type="date" required></div>
+<div class="field"><label>ประเภทเงิน</label><select id="bucket"><option value="emergency">🛟 Emergency Fund — EUR</option><option value="investment">📈 ETF Investment — USD</option><option value="happiness">☀️ Happiness Fund — THB</option></select></div>
+<div class="field" id="etfField"><label>ETF</label><select id="etf"></select></div>
+<div class="field"><label>การเคลื่อนไหว</label><select id="type"><option value="add">เพิ่มเงิน / ซื้อ</option><option value="subtract">ถอน / ขาย</option></select></div>
+<div class="field"><label>จำนวนเงิน</label><input id="amount" type="number" step="0.01" min="0" placeholder="USD / EUR / THB" required></div>
+<div class="field" id="sharesField"><label>จำนวนหน่วย (Shares) — ไม่บังคับ</label><input id="shares" type="number" step="0.0001" min="0" placeholder="เช่น 0.25"></div>
+<div class="field" id="priceField"><label>ราคาต่อหน่วย — ไม่บังคับ</label><input id="price" type="number" step="0.01" min="0" placeholder="USD ต่อหน่วย"></div>
+<div class="field full"><label>รายละเอียด</label><input id="note" maxlength="120" placeholder="เช่น ซื้อ VOO / เงินเดือน / ค่าใช้จ่าย"></div>
+</div><div class="actions"><button class="secondary" type="reset">ล้าง</button><button class="primary">บันทึกข้อมูล</button></div></form></div>
+<div class="section-title"><h2>ยอดปัจจุบัน</h2></div><div class="grid three" id="recordCards"></div>
+
+</section>
+
+<section class="section" id="investment">
+<div class="card"><div class="section-title"><h2>ETF Portfolio</h2><span class="small">ยอดเงินลงทุนสะสม แยกตาม ETF</span></div><div class="notice">ยอด Investment รวม = ผลรวมของยอดใน ETF ทุกตัว ระบบไม่เอา EUR หรือ THB มาปนกับ USD และไม่ใช้มูลค่าพอร์ตปัจจุบันแทนเงินที่ลงทุนจริง</div><div id="portfolioTotal" style="font-size:34px;font-weight:850;margin:18px 0 4px">0.00 USD</div><div class="small">Total Investment Contribution</div></div>
+<div class="card" style="margin-top:16px"><div class="section-title"><h2>แต่ละ ETF</h2><span class="small">เลือกเพิ่ม ETF ได้ใน Settings</span></div><div id="portfolioEtfs" class="etf-grid"></div></div>
+</section>
+<section class="section" id="happiness"><div class="card" style="margin-top:16px">
+  <div class="section-title"><h2>☀️ Happiness Fund</h2><span class="small">เงินสำหรับซื้อสิ่งที่ทำให้ตัวเองมีความสุข</span></div>
+  <div class="kpis">
+    <div class="kpi"><span class="small">เงินที่ใช้ได้ตอนนี้</span><b id="happyAvailable">0.00 THB</b></div>
+    <div class="kpi"><span class="small">Wishlist</span><b id="wishlistCount">0 รายการ</b></div>
+  </div>
+  <div class="section-title" style="margin-top:22px"><h2>บันทึกสิ่งที่อยากได้</h2></div>
+  <form id="wishForm">
+    <div class="form-grid">
+      <div class="field"><label>สิ่งที่อยากได้</label><input id="wishName" maxlength="80" placeholder="เช่น รองเท้า / น้ำหอม / เกม" required></div>
+      <div class="field"><label>ราคาที่ตั้งใจเก็บ (THB)</label><input id="wishTarget" type="number" min="0" step="0.01" placeholder="เช่น 3500" required></div>
+      <div class="field"><label>วันที่อยากซื้อ (ไม่บังคับ)</label><input id="wishDate" type="date"></div>
+      <div class="field"><label>หมวดหมู่</label><select id="wishCategory"><option>Shopping</option><option>Travel</option><option>Entertainment</option><option>Self-care</option><option>Other</option></select></div>
+      <div class="field full"><label>หมายเหตุ</label><input id="wishNote" maxlength="120" placeholder="เช่น รอโปรโมชันก่อนซื้อ"></div>
+    </div>
+    <div class="actions"><button class="primary">เพิ่ม Wishlist</button></div>
+  </form>
+  <div class="section-title" style="margin-top:24px"><h2>Wishlist</h2><span class="small">กด “ซื้อแล้ว” เพื่อถอนเงินจาก Happiness Fund</span></div>
+  <div id="wishlistList"></div>
+</div>
+</section>
+
+<section class="section" id="history">
+<div class="card"><div class="section-title"><h2>ประวัติการบันทึก</h2><button class="secondary" id="clearAll">ล้างข้อมูลทั้งหมด</button></div><div class="history" id="historyList"></div></div>
+</section>
+
+<section class="section" id="settings">
+<div class="grid two">
+<div class="card"><div class="section-title"><h2>ETF ที่ใช้งาน</h2></div><div class="notice">เลือก ETF ที่คุณต้องการติดตาม ระบบจะนำรายการเหล่านี้ไปใช้ใน Investment และกราฟทั้งหมด</div><div id="etfChecks" style="margin-top:14px"></div><div class="actions"><button class="primary" id="saveEtfs">บันทึก ETF</button></div></div>
+<div class="card"><div class="section-title"><h2>อัตราแลกเปลี่ยน</h2></div><div class="notice">ใช้เพื่อดูมูลค่าประมาณการเป็น THB เท่านั้น ยอดจริงยังคงแยก EUR / USD / THB</div><div class="form-grid" style="margin-top:15px"><div class="field"><label>1 EUR = THB</label><input id="eurRate" type="number" step="0.01"></div><div class="field"><label>1 USD = THB</label><input id="usdRate" type="number" step="0.01"></div></div><div class="actions"><button class="primary" id="saveRates">บันทึก</button></div></div>
+</div>
+<div class="card" style="margin-top:16px"><div class="section-title"><h2>Backup</h2></div><p class="muted" style="line-height:1.7">ข้อมูลทั้งหมดอยู่บนอุปกรณ์ของคุณ ใช้ Export เพื่อสำรองก่อนเปลี่ยนอุปกรณ์</p><div class="actions"><button class="secondary" id="exportBtn">Export JSON</button><button class="secondary" id="importBtn">Import JSON</button><input id="importFile" type="file" accept=".json" hidden></div></div>
+</section>
+<div class="footer">My Savings · Personal Money Journal · Offline-first PWA</div>
+</main>
+<script>
+const KEY="mySavings_v2";
+const ETF_CATALOG={VOO:"Vanguard S&P 500 ETF",QQQM:"Invesco NASDAQ 100 ETF",VT:"Vanguard Total World Stock ETF",SCHD:"Schwab U.S. Dividend Equity ETF",VIG:"Vanguard Dividend Appreciation ETF",IVV:"iShares Core S&P 500 ETF",VEPI:"Vanguard S&P 500 Equal Weight ETF",VTI:"Vanguard Total Stock Market ETF",VXUS:"Vanguard Total International Stock ETF"};
+const DEFAULT_ETFS=["VOO","QQQM","VT","SCHD","VIG","IVV","VEPI"];
+const META={emergency:{name:"Emergency Fund",currency:"EUR",icon:"🛟",color:"#76bde8"},investment:{name:"ETF Investment",currency:"USD",icon:"📈",color:"#70bd9a"},happiness:{name:"Happiness Fund",currency:"THB",icon:"☀️",color:"#e5bd70"}};
+const DEFAULT={entries:[],rates:{EUR:37.2,USD:32.8},etfs:DEFAULT_ETFS};
+let state=JSON.parse(localStorage.getItem(KEY)||"null");
+if(!state)state=DEFAULT;
+if(!state.etfs)state.etfs=DEFAULT_ETFS;
+if(!state.rates)state.rates=DEFAULT.rates;
+if(!state.entries)state.entries=[];
+if(!Array.isArray(state.wishlist))state.wishlist=[];
+const $=id=>document.getElementById(id),money=(n,d=2)=>Number(n||0).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function totals(){let t={emergency:0,investment:0,happiness:0};for(const e of state.entries)t[e.bucket]+=(e.type==="add"?1:-1)*Number(e.amount);return t}
+function etfTotals(){const o={};state.etfs.forEach(x=>o[x]=0);state.entries.filter(e=>e.bucket==="investment").forEach(e=>{if(!(e.etf in o))o[e.etf]=0;o[e.etf]+=(e.type==="add"?1:-1)*Number(e.amount)});return o}
+function cumulative(bucket,date){let v=0;for(const e of state.entries.filter(x=>x.bucket===bucket&&x.date<=date).sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id))v+=(e.type==="add"?1:-1)*Number(e.amount);return v}
+function allDates(){return [...new Set(state.entries.map(e=>e.date))].sort()}
+function renderChart(){
+ const c=$("chart"),ctx=c.getContext("2d"),dpr=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+ const dates=allDates();if(!dates.length){ctx.fillStyle="#8a9aa5";ctx.font="14px -apple-system";ctx.fillText("บันทึกข้อมูลเพื่อเริ่มเห็นการเปลี่ยนแปลง",24,h/2);return}
+ const pad={l:42,r:20,t:20,b:35};const pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ // Three lines are intentionally drawn together by date. Each currency keeps its own scale to avoid falsely converting EUR/USD/THB.
+ const vals={emergency:dates.map(d=>cumulative("emergency",d)),investment:dates.map(d=>cumulative("investment",d)),happiness:dates.map(d=>cumulative("happiness",d))};
+ const scales={emergency:Math.max(1,...vals.emergency.map(Math.abs)),investment:Math.max(1,...vals.investment.map(Math.abs)),happiness:Math.max(1,...vals.happiness.map(Math.abs))};
+ ctx.strokeStyle="rgba(90,120,140,.11)";ctx.lineWidth=1;for(let i=0;i<4;i++){const y=pad.t+ph*i/3;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke()}
+ const draw=(bucket,color)=>{const a=vals[bucket],max=scales[bucket];ctx.strokeStyle=color;ctx.lineWidth=3;ctx.lineCap="round";ctx.lineJoin="round";ctx.beginPath();a.forEach((v,i)=>{const x=pad.l+(i/Math.max(1,a.length-1))*pw,y=pad.t+ph*(1-Math.max(0,v)/max);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();a.forEach((v,i)=>{const x=pad.l+(i/Math.max(1,a.length-1))*pw,y=pad.t+ph*(1-Math.max(0,v)/max);ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,3.2,0,Math.PI*2);ctx.fill()})};
+ draw("emergency",META.emergency.color);draw("investment",META.investment.color);draw("happiness",META.happiness.color);
+ ctx.fillStyle="#81919c";ctx.font="11px -apple-system";ctx.fillText(dates[0],pad.l,h-9);if(dates.length>1)ctx.fillText(dates[dates.length-1],w-pad.r-75,h-9);
+}
+function render(){
+ const t=totals(),et=etfTotals();
+ $("eurTotal").innerHTML=money(t.emergency)+' <span class="currency">EUR</span>';$("usdTotal").innerHTML=money(t.investment)+' <span class="currency">USD</span>';$("thbTotal").innerHTML=money(t.happiness)+' <span class="currency">THB</span>';
+ [["emergency","eurChange"],["investment","usdChange"],["happiness","thbChange"]].forEach(([b,id])=>{const a=state.entries.filter(e=>e.bucket===b).sort((x,y)=>x.date.localeCompare(y.date)||x.id-y.id);if(!a.length){$(id).textContent="ยังไม่มีข้อมูล";return}const last=a[a.length-1],v=(last.type==="add"?1:-1)*Number(last.amount);$(id).innerHTML=`ล่าสุด <span class="${v>=0?"up":"down"}">${v>=0?"+":""}${money(v)} ${META[b].currency}</span>`});
+ $("etfCount").textContent=Object.keys(et).filter(k=>Math.abs(et[k])>0).length;$("etfTotalSmall").textContent=money(t.investment)+" USD";
+ $("recordCards").innerHTML=Object.entries(META).map(([b,m])=>`<div class="card"><div class="label">${m.icon} ${m.name}</div><div class="amount">${money(t[b])}</div><div class="small">${m.currency}</div></div>`).join("");
+ renderETF("dashboardEtfs");renderETF("portfolioEtfs");$("portfolioTotal").textContent=money(t.investment)+" USD";renderHistory();renderMonth();renderChart();renderETFChecks();updateETFFields();renderWishlist();
+}
+function renderETF(target){const el=$(target),et=etfTotals();const keys=[...new Set([...state.etfs,...Object.keys(et).filter(k=>et[k]!==0)])];if(!keys.length){el.innerHTML='<div class="empty">ยังไม่มี ETF</div>';return}el.innerHTML=keys.map(k=>`<div class="etf-card"><div class="ticker">${k}</div><div class="etf-name">${ETF_CATALOG[k]||"Custom ETF"}</div><div class="etf-value">${money(et[k]||0)}</div><div class="etf-meta">USD · ${((et[k]||0)/(totals().investment||1)*100).toFixed(1)}% ของ Investment</div></div>`).join("")}
+function renderETFChecks(){const el=$("etfChecks");el.innerHTML=Object.entries(ETF_CATALOG).map(([k,n])=>`<label style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><input type="checkbox" value="${k}" ${state.etfs.includes(k)?"checked":""} style="width:20px;height:20px"><span><b>${k}</b><span class="small"> — ${n}</span></span></label>`).join("")}
+function updateETFFields(){const inv=$("bucket").value==="investment";$("etfField").style.display=inv?"block":"none";$("sharesField").style.display=inv?"block":"none";$("priceField").style.display=inv?"block":"none";if(inv){$("etf").innerHTML=state.etfs.map(k=>`<option value="${k}">${k} — ${ETF_CATALOG[k]||"Custom ETF"}</option>`).join("")}}
+function renderHistory(){const list=$("historyList"),arr=[...state.entries].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);if(!arr.length){list.innerHTML='<div class="empty">ยังไม่มีรายการ ✨</div>';return}list.innerHTML=arr.map(e=>{const m=META[e.bucket],sign=e.type==="add"?"+":"-";const extra=e.bucket==="investment"?` · ${e.etf||""}${e.shares?` · ${money(e.shares,4)} shares`:""}`:"";return `<div class="row"><div class="small">${e.date}</div><div><span class="dot" style="background:${m.color}"></span><span class="entry-value">${m.name}${extra}</span><div class="small">${e.note||"ไม่มีรายละเอียด"}</div></div><div class="${e.type==="add"?"up":"down"}">${sign}${money(e.amount)} ${m.currency}<br><button class="secondary" style="padding:4px 8px;font-size:11px;margin-top:5px" onclick="removeEntry(${e.id})">ลบ</button></div></div>`}).join("")}
+function renderMonth(){const ym=new Date().toISOString().slice(0,7),s={emergency:0,investment:0,happiness:0};state.entries.filter(e=>e.date.startsWith(ym)).forEach(e=>s[e.bucket]+=(e.type==="add"?1:-1)*Number(e.amount));$("monthSummary").innerHTML=Object.entries(META).map(([b,m])=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span>${m.icon} ${m.currency}</span><b class="${s[b]>=0?"up":"down"}">${s[b]>=0?"+":""}${money(s[b])}</b></div>`).join("")}
+
+function happinessBalance(){return totals().happiness}
+function renderWishlist(){
+  const el=$("wishlistList"), items=[...state.wishlist].sort((a,b)=>Number(a.done)-Number(b.done)||b.id-a.id);
+  $("happyAvailable").textContent=money(happinessBalance())+" THB";
+  $("wishlistCount").textContent=items.filter(x=>!x.done).length+" รายการ";
+  if(!items.length){el.innerHTML='<div class="empty">ยังไม่มีสิ่งที่อยากได้ ลองเพิ่มของที่อยากซื้อให้ตัวเอง ✨</div>';return}
+  el.innerHTML=items.map(w=>{
+    const progress=Math.min(100,(Number(w.saved)||0)/(Number(w.target)||1)*100);
+    const enough=happinessBalance()>=Number(w.target||0);
+    return `<div style="padding:15px 0;border-bottom:1px solid var(--line);opacity:${w.done?.6:1}">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
+        <div><b>${escapeHtml(w.name)}</b><div class="small">${escapeHtml(w.category||"Other")}${w.date?" · อยากซื้อ "+w.date:""}</div></div>
+        <b>${money(w.target)} THB</b>
+      </div>
+      <div style="height:7px;background:#edf3f6;border-radius:99px;margin:12px 0 6px;overflow:hidden"><div style="width:${progress}%;height:100%;background:linear-gradient(90deg,#e5bd70,#8ccfb3);border-radius:99px"></div></div>
+      <div class="small">เป้าหมาย ${money(w.target)} THB · ${enough?"เงินพอสำหรับซื้อแล้ว":"ต้องมีเงินอีก "+money(Math.max(0,Number(w.target)-happinessBalance()))+" THB"}</div>
+      ${w.note?`<div class="small" style="margin-top:5px">♡ ${escapeHtml(w.note)}</div>`:""}
+      ${!w.done?`<div class="actions">
+        <button class="secondary" type="button" onclick="deleteWish(${w.id})">ลบ</button>
+        <button class="primary" type="button" onclick="buyWish(${w.id})">ซื้อแล้ว / ถอน ${money(w.target)} THB</button>
+      </div>`:`<div class="small up" style="margin-top:9px">✓ ซื้อแล้ว — ถอนจาก Happiness Fund แล้ว</div>`}
+    </div>`;
+  }).join("");
+}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function buyWish(id){
+  const w=state.wishlist.find(x=>x.id===id); if(!w||w.done)return;
+  const amount=Number(w.target)||0;
+  if(amount<=0)return alert("ราคาสินค้าไม่ถูกต้อง");
+  if(happinessBalance()<amount)return alert("เงิน Happiness Fund ยังไม่พอสำหรับรายการนี้");
+  state.entries.push({id:Date.now(),date:new Date().toISOString().slice(0,10),bucket:"happiness",amount,type:"subtract",note:"ซื้อแล้ว: "+w.name,wishId:id});
+  w.done=true;w.purchasedDate=new Date().toISOString().slice(0,10);save();render();
+}
+function deleteWish(id){if(confirm("ลบรายการ Wishlist นี้หรือไม่?")){state.wishlist=state.wishlist.filter(x=>x.id!==id);save();render()}}
+$("wishForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const target=Number($("wishTarget").value);
+  if(!Number.isFinite(target)||target<=0)return alert("กรุณาใส่ราคาที่ถูกต้อง");
+  state.wishlist.push({id:Date.now(),name:$("wishName").value.trim(),target,date:$("wishDate").value,category:$("wishCategory").value,note:$("wishNote").value.trim(),saved:0,done:false});
+  save();e.target.reset();render();
+});
+function removeEntry(id){state.entries=state.entries.filter(e=>e.id!==id);save();render()}
+$("entryForm").addEventListener("submit",e=>{e.preventDefault();const bucket=$("bucket").value,amount=Number($("amount").value);if(!amount||amount<0)return alert("กรุณาใส่จำนวนเงินที่ถูกต้อง");const x={id:Date.now(),date:$("date").value,bucket,amount,type:$("type").value,note:$("note").value.trim()};if(bucket==="investment"){x.etf=$("etf").value;x.shares=Number($("shares").value)||0;x.price=Number($("price").value)||0}state.entries.push(x);save();e.target.reset();$("date").value=new Date().toISOString().slice(0,10);render();switchTab("investment")});
+$("bucket").addEventListener("change",updateETFFields);$("date").value=new Date().toISOString().slice(0,10);
+function switchTab(tab){document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));document.querySelectorAll(".section").forEach(x=>x.classList.toggle("active",x.id===tab));if(tab==="dashboard")setTimeout(renderChart,20)}
+document.querySelectorAll(".tab").forEach(x=>x.addEventListener("click",()=>switchTab(x.dataset.tab)));document.querySelectorAll("[data-tab-go]").forEach(x=>x.addEventListener("click",()=>switchTab(x.dataset.tabGo)));
+$("clearAll").onclick=()=>{if(confirm("ลบข้อมูลการบันทึกทั้งหมดหรือไม่?")){state.entries=[];save();render()}};
+function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="my-savings-backup.json";a.click();URL.revokeObjectURL(a.href)}
+$("exportBtn").onclick=exportData;$("exportTop").onclick=exportData;$("importBtn").onclick=()=>$("importFile").click();
+$("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.entries)||!x.rates)throw Error();state=x;if(!state.etfs)state.etfs=DEFAULT_ETFS;save();render();alert("นำเข้าข้อมูลสำเร็จ")}catch{alert("ไฟล์ไม่ถูกต้อง")}};r.readAsText(f)};
+$("eurRate").value=state.rates.EUR;$("usdRate").value=state.rates.USD;
+$("saveRates").onclick=()=>{state.rates.EUR=Number($("eurRate").value)||0;state.rates.USD=Number($("usdRate").value)||0;save();alert("บันทึกอัตราแลกเปลี่ยนแล้ว")};
+$("saveEtfs").onclick=()=>{const selected=[...$("etfChecks").querySelectorAll("input:checked")].map(x=>x.value);const used=[...new Set(state.entries.filter(e=>e.bucket==="investment"&&e.etf).map(e=>e.etf))];state.etfs=[...new Set([...selected,...used])];save();render();alert("บันทึก ETF แล้ว")};
+let deferredPrompt;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("installBtn").hidden=false});$("installBtn").onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$("installBtn").hidden=true};
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
+render();
+</script>
+</body></html>
